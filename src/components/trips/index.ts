@@ -1,1 +1,1 @@
-export { SavedTripsPanel } from './SavedTripsPanel';
+export { SavedTripsPanel } from "./SavedTripsPanel";

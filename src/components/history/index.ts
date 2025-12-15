@@ -1,1 +1,1 @@
-export { HistorySidebar } from './HistorySidebar';
+export { HistorySidebar } from "./HistorySidebar";
