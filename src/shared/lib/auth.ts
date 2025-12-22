@@ -1,7 +1,7 @@
+import { getCurrentUser } from "@/services/user"
 import { useAppSession } from "@/shared/lib/session"
 import { redirect } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
-import { apiClient } from "../api/client"
 
 // Get current user
 export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(
@@ -12,12 +12,9 @@ export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(
     if (!userId) {
       return null
     }
-    const response = await apiClient<{ id: number; email: string }>(
-      "api/v1/auth/me",
-    )
-    const json = await response.json()
+    const result = await getCurrentUser()
 
-    return json
+    return result
   },
 )
 
