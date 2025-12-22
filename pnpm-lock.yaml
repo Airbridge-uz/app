@@ -19,16 +19,19 @@ importers:
         version: 4.1.18(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       '@tanstack/ai':
         specifier: ^0.1.0
-        version: 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)
+        version: 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)
       '@tanstack/ai-openai':
         specifier: ^0.1.1
-        version: 0.1.1(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76))(ws@8.18.3)(zod@3.25.76)
+        version: 0.1.1(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1))(ws@8.18.3)(zod@4.2.1)
       '@tanstack/ai-react':
         specifier: ^0.1.0
-        version: 0.1.0(@tanstack/ai-client@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76))(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76))(@types/react@19.2.7)(react@19.2.3)
+        version: 0.1.0(@tanstack/ai-client@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1))(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1))(@types/react@19.2.7)(react@19.2.3)
       '@tanstack/react-devtools':
         specifier: ^0.7.0
         version: 0.7.11(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(csstype@3.2.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.10)
+      '@tanstack/react-form':
+        specifier: ^1.27.5
+        version: 1.27.5(@tanstack/react-start@1.142.5(crossws@0.4.1(srvx@0.9.8))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@tanstack/react-query':
         specifier: ^5.90.12
         version: 5.90.12(react@19.2.3)
@@ -53,9 +56,21 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
+      ky:
+        specifier: ^1.14.1
+        version: 1.14.1
       lucide-react:
         specifier: ^0.562.0
         version: 0.562.0(react@19.2.3)
+      neverthrow:
+        specifier: ^8.2.0
+        version: 8.2.0
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       nitro:
         specifier: latest
         version: 3.0.1-alpha.1(lru-cache@11.2.4)(rollup@4.54.0)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
@@ -68,6 +83,9 @@ importers:
       shadcn:
         specifier: ^3.6.2
         version: 3.6.2(@types/node@22.19.3)(hono@4.11.1)(typescript@5.9.3)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -80,6 +98,9 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
+      zod:
+        specifier: ^4.2.1
+        version: 4.2.1
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.10
@@ -1320,9 +1341,16 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
+  '@tanstack/form-core@1.27.5':
+    resolution: {integrity: sha512-A8EriWfn+2QsxEbzt6AXn6CC6ILv3VPDXhBDAeE5LTiCHryy7xuj+zo1Q2JWBkhJxS1AuEgY1BZr5AP2mWiHQQ==}
+
   '@tanstack/history@1.141.0':
     resolution: {integrity: sha512-LS54XNyxyTs5m/pl1lkwlg7uZM3lvsv2FIIV1rsJgnfwVCnI+n4ZGZ2CcjNT13BPu/3hPP+iHmliBSscJxW5FQ==}
     engines: {node: '>=12'}
+
+  '@tanstack/pacer-lite@0.1.1':
+    resolution: {integrity: sha512-y/xtNPNt/YeyoVxE/JCx+T7yjEzpezmbb+toK8DDD1P4m7Kzs5YR956+7OKexG3f8aXgC3rLZl7b1V+yNUSy5w==}
+    engines: {node: '>=18'}
 
   '@tanstack/query-core@5.90.12':
     resolution: {integrity: sha512-T1/8t5DhV/SisWjDnaiU2drl6ySvsHj1bHBCWNXd+/T+Hh1cf6JodyEYMd5sgwm+b/mETT4EV3H+zCVczCU5hg==}
@@ -1335,6 +1363,15 @@ packages:
       '@types/react-dom': '>=16.8'
       react: '>=16.8'
       react-dom: '>=16.8'
+
+  '@tanstack/react-form@1.27.5':
+    resolution: {integrity: sha512-B0nSrlOh4+i/zq2U2ezyRYVz4+6vVzviVAFSZL3FCrJiwryEPM4/0E/RpwkbMZiY2UHp/4KHenPcBQZGhXS+tw==}
+    peerDependencies:
+      '@tanstack/react-start': '*'
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@tanstack/react-start':
+        optional: true
 
   '@tanstack/react-query@5.90.12':
     resolution: {integrity: sha512-graRZspg7EoEaw0a8faiUASCyJrqjKPdqJ9EwuDRUF9mEYJ1YPczI9H+/agJ0mOJkPCJDk0lsz5QTrLZ/jQ2rg==}
@@ -1470,6 +1507,9 @@ packages:
   '@tanstack/start-storage-context@1.142.1':
     resolution: {integrity: sha512-svmFg1QiuGE7Cr2v4x4yxyvM1gE1Q+qwmUhdfyKqfqiWg6BbcQnTVzTYoWfCesc2kbjORC+krqZ4hjYestx2Vg==}
     engines: {node: '>=22.12.0'}
+
+  '@tanstack/store@0.7.7':
+    resolution: {integrity: sha512-xa6pTan1bcaqYDS9BDpSiS63qa6EoDkPN9RsRaxHuDdVDNntzq3xNwR5YKTU/V3SkSyC9T4YVOPh2zRQN0nhIQ==}
 
   '@tanstack/store@0.8.0':
     resolution: {integrity: sha512-Om+BO0YfMZe//X2z0uLF2j+75nQga6TpTJgLJQBiq85aOyZNIhkCgleNcud2KQg4k4v9Y9l+Uhru3qWMPGTOzQ==}
@@ -3013,6 +3053,10 @@ packages:
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
 
+  jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
+
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -3023,6 +3067,10 @@ packages:
   kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
+
+  ky@1.14.1:
+    resolution: {integrity: sha512-hYje4L9JCmpEQBtudo+v52X5X8tgWXUYyPcxKSuxQNboqufecl9VMWjGiucAFH060AwPXHZuH+WB2rrqfkmafw==}
+    engines: {node: '>=18'}
 
   launch-editor@2.12.0:
     resolution: {integrity: sha512-giOHXoOtifjdHqUamwKq6c49GzBdLjvxrd2D+Q4V6uOHopJv7p9VJxikDsQ/CBXZbEITgUqSVHXLTG3VhPP1Dg==}
@@ -3229,6 +3277,16 @@ packages:
 
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+
+  neverthrow@8.2.0:
+    resolution: {integrity: sha512-kOCT/1MCPAxY5iUV3wytNFUMUolzuwd/VF/1KCx7kf6CutrOsTie+84zTGTpgQycjvfLdBBdvBvFLqFD2c0wkQ==}
+    engines: {node: '>=18'}
+
+  next-themes@0.4.6:
+    resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
   nf3@0.1.12:
     resolution: {integrity: sha512-qbMXT7RTGh74MYWPeqTIED8nDW70NXOULVHpdWcdZ7IVHVnAsMV9fNugSNnvooipDc1FMOzpis7T9nXJEbJhvQ==}
@@ -3725,6 +3783,12 @@ packages:
 
   solid-js@1.9.10:
     resolution: {integrity: sha512-Coz956cos/EPDlhs6+jsdTxKuJDPT7B5SVIWgABwROyxjY7Xbr8wkzD68Et+NxnV7DLJ3nJdAC2r9InuV/4Jew==}
+
+  sonner@2.0.7:
+    resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -4359,13 +4423,16 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zod@4.2.1:
+    resolution: {integrity: sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==}
+
 snapshots:
 
   '@acemir/cssom@0.9.29': {}
 
-  '@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76)':
+  '@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1)':
     dependencies:
-      zod: 3.25.76
+      zod: 4.2.1
 
   '@antfu/ni@25.0.0':
     dependencies:
@@ -5313,34 +5380,34 @@ snapshots:
       tailwindcss: 4.1.18
       vite: 7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)
 
-  '@tanstack/ai-client@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)':
+  '@tanstack/ai-client@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)':
     dependencies:
-      '@tanstack/ai': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)
+      '@tanstack/ai': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)
     transitivePeerDependencies:
       - '@alcyone-labs/zod-to-json-schema'
       - zod
 
-  '@tanstack/ai-openai@0.1.1(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76))(ws@8.18.3)(zod@3.25.76)':
+  '@tanstack/ai-openai@0.1.1(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1))(ws@8.18.3)(zod@4.2.1)':
     dependencies:
-      '@tanstack/ai': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)
-      openai: 6.15.0(ws@8.18.3)(zod@3.25.76)
-      zod: 3.25.76
+      '@tanstack/ai': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)
+      openai: 6.15.0(ws@8.18.3)(zod@4.2.1)
+      zod: 4.2.1
     transitivePeerDependencies:
       - ws
 
-  '@tanstack/ai-react@0.1.0(@tanstack/ai-client@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76))(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76))(@types/react@19.2.7)(react@19.2.3)':
+  '@tanstack/ai-react@0.1.0(@tanstack/ai-client@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1))(@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1))(@types/react@19.2.7)(react@19.2.3)':
     dependencies:
-      '@tanstack/ai': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)
-      '@tanstack/ai-client': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)
+      '@tanstack/ai': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)
+      '@tanstack/ai-client': 0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)
       '@types/react': 19.2.7
       react: 19.2.3
 
-  '@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@3.25.76))(zod@3.25.76)':
+  '@tanstack/ai@0.1.0(@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.2.1))(zod@4.2.1)':
     dependencies:
-      '@alcyone-labs/zod-to-json-schema': 4.0.10(zod@3.25.76)
+      '@alcyone-labs/zod-to-json-schema': 4.0.10(zod@4.2.1)
       '@tanstack/devtools-event-client': 0.4.0
       partial-json: 0.1.7
-      zod: 3.25.76
+      zod: 4.2.1
 
   '@tanstack/devtools-client@0.0.3':
     dependencies:
@@ -5441,7 +5508,15 @@ snapshots:
       - supports-color
       - typescript
 
+  '@tanstack/form-core@1.27.5':
+    dependencies:
+      '@tanstack/devtools-event-client': 0.4.0
+      '@tanstack/pacer-lite': 0.1.1
+      '@tanstack/store': 0.7.7
+
   '@tanstack/history@1.141.0': {}
+
+  '@tanstack/pacer-lite@0.1.1': {}
 
   '@tanstack/query-core@5.90.12': {}
 
@@ -5457,6 +5532,16 @@ snapshots:
       - csstype
       - solid-js
       - utf-8-validate
+
+  '@tanstack/react-form@1.27.5(@tanstack/react-start@1.142.5(crossws@0.4.1(srvx@0.9.8))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@tanstack/form-core': 1.27.5
+      '@tanstack/react-store': 0.8.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react: 19.2.3
+    optionalDependencies:
+      '@tanstack/react-start': 1.142.5(crossws@0.4.1(srvx@0.9.8))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
+    transitivePeerDependencies:
+      - react-dom
 
   '@tanstack/react-query@5.90.12(react@19.2.3)':
     dependencies:
@@ -5690,6 +5775,8 @@ snapshots:
   '@tanstack/start-storage-context@1.142.1':
     dependencies:
       '@tanstack/router-core': 1.141.8
+
+  '@tanstack/store@0.7.7': {}
 
   '@tanstack/store@0.8.0': {}
 
@@ -7377,6 +7464,8 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
+  jwt-decode@4.0.0: {}
+
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
@@ -7384,6 +7473,8 @@ snapshots:
   kleur@3.0.3: {}
 
   kleur@4.1.5: {}
+
+  ky@1.14.1: {}
 
   launch-editor@2.12.0:
     dependencies:
@@ -7555,6 +7646,15 @@ snapshots:
 
   neo-async@2.6.2: {}
 
+  neverthrow@8.2.0:
+    optionalDependencies:
+      '@rollup/rollup-linux-x64-gnu': 4.54.0
+
+  next-themes@0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   nf3@0.1.12: {}
 
   nitro@3.0.1-alpha.1(lru-cache@11.2.4)(rollup@4.54.0)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)):
@@ -7696,10 +7796,10 @@ snapshots:
       powershell-utils: 0.1.0
       wsl-utils: 0.3.0
 
-  openai@6.15.0(ws@8.18.3)(zod@3.25.76):
+  openai@6.15.0(ws@8.18.3)(zod@4.2.1):
     optionalDependencies:
       ws: 8.18.3
-      zod: 3.25.76
+      zod: 4.2.1
 
   optionator@0.9.4:
     dependencies:
@@ -8189,6 +8289,11 @@ snapshots:
       csstype: 3.2.3
       seroval: 1.3.2
       seroval-plugins: 1.3.3(seroval@1.3.2)
+
+  sonner@2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
 
   source-map-js@1.2.1: {}
 
@@ -8765,3 +8870,5 @@ snapshots:
       zod: 3.25.76
 
   zod@3.25.76: {}
+
+  zod@4.2.1: {}

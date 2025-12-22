@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Navigate } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/")({ component: App })
+export const Route = createFileRoute("/")({
+  component: App,
+})
 
 function App() {
-  return <div className="text-2xl font-bold">Hello World</div>
+  return <Navigate to="/dashboard" />
 }

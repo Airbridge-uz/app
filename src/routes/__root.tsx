@@ -1,10 +1,20 @@
-import { TanStackDevtools } from "@tanstack/react-devtools"
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
-
+import { RootProvider } from "@/app/providers/root/provider"
 import appCss from "@/app/styles/styles.css?url"
+import { Toaster } from "@/shared/ui/sonner"
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from "@tanstack/react-router"
+import type * as React from "react"
 
 export const Route = createRootRoute({
+  shellComponent: RootShell,
+  component: RootComponent,
+  errorComponent: () => <div>Error</div>,
+  notFoundComponent: () => <div>Not found</div>,
+  ssr: false, // or `defaultSsr: false` on the router,
   head: () => ({
     meta: [
       {
@@ -25,11 +35,9 @@ export const Route = createRootRoute({
       },
     ],
   }),
-
-  shellComponent: RootDocument,
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -37,19 +45,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function RootComponent() {
+  return (
+    <RootProvider>
+      <Outlet />
+      <Toaster />
+    </RootProvider>
   )
 }
