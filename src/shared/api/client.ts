@@ -1,26 +1,25 @@
 import ky from "ky"
-import { getSessionToken } from "../lib/auth"
+import { authHeaderHook, beforeErrorHook } from "./hooks"
 
 export const apiClient = ky.create({
   prefixUrl: import.meta.env.VITE_API_URL,
   hooks: {
-    beforeRequest: [
-      async (req) => {
-        const result = await getSessionToken()
+    beforeRequest: [authHeaderHook],
+    beforeError: [beforeErrorHook],
+  },
+  headers: {
+    "Content-Type": "application/json",
+    accept: "application/json",
+  },
+})
 
-        if (result.success) {
-          return new Request(req, {
-            headers: {
-              ...req.headers,
-              Authorization: result.success
-                ? `Bearer ${result.data}`
-                : undefined,
-            },
-          })
-        }
-
-        return req
-      },
-    ],
+export const publicApiClient = ky.create({
+  prefixUrl: import.meta.env.VITE_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+    accept: "application/json",
+  },
+  hooks: {
+    beforeError: [beforeErrorHook],
   },
 })

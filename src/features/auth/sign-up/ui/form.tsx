@@ -7,45 +7,48 @@ import { useNavigate } from "@tanstack/react-router"
 import { useServerFn } from "@tanstack/react-start"
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
-import { z } from "zod"
-import { signInFn } from "../api/mutation"
+import { signUpFn } from "../api/mutation"
+import { signUpPayloadSchema } from "../model/schema"
+import type { SignUpPayload } from "../model/types"
 
-const formSchema = z.object({
-  email: z.email(),
-  password: z.string().min(8, "Password must be at least 8 characters."),
-})
+const defaultFormValues: SignUpPayload = {
+  email: "",
+  password: "",
+  preferred_currency: "USD",
+  preferred_language: "en",
+}
 
-export function SignInForm() {
+export function SignUpForm() {
   const [isVisible, setIsVisible] = useState(false)
   const navigate = useNavigate()
-  const serverFn = useServerFn(signInFn)
+  const serverFn = useServerFn(signUpFn)
   const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: defaultFormValues,
     onSubmit: async ({ value }) => {
       const response = await serverFn({
         data: {
           email: value.email,
           password: value.password,
+          full_name: value.full_name,
+          preferred_currency: value.preferred_currency,
+          preferred_language: value.preferred_language,
         },
       })
       if (response.success === false) {
-        return notifyError("Failed to sign in!", {
+        return notifyError("Failed to sign up!", {
           description: response.error.message,
         })
       }
-      notifySuccess("Successfully signed in!")
+      notifySuccess("Successfully signed up!")
       navigate({
-        to: "/dashboard",
+        to: "/auth/login",
       })
       form.reset()
     },
     validators: {
-      onSubmit: formSchema,
-      onChange: formSchema,
-      onBlur: formSchema,
+      onSubmit: signUpPayloadSchema,
+      onChange: signUpPayloadSchema,
+      onBlur: signUpPayloadSchema,
     },
     canSubmitWhenInvalid: true,
     asyncAlways: true,
@@ -77,6 +80,7 @@ export function SignInForm() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   aria-invalid={isInvalid}
+                  type="email"
                 />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
@@ -122,6 +126,28 @@ export function SignInForm() {
             )
           }}
         />
+        <form.Field
+          name="full_name"
+          children={(field) => {
+            const isInvalid =
+              field.state.meta.isTouched && !field.state.meta.isValid
+
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={field.name}>Full name</FieldLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  aria-invalid={isInvalid}
+                />
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            )
+          }}
+        />
       </FieldGroup>
 
       <form.Subscribe
@@ -129,7 +155,7 @@ export function SignInForm() {
         children={([canSubmit, isSubmitting]) => (
           <Button className="w-full" type="submit" disabled={!canSubmit}>
             {isSubmitting && <Loader2 className="animate-spin" />}
-            Sign in
+            Sign up
           </Button>
         )}
       />

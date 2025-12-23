@@ -1,29 +1,31 @@
-import { apiClient } from "@/shared/api/client"
-import type { HTTPError } from "ky"
-import { ResultAsync } from "neverthrow"
+import type { SignInPayload, SignInResult } from "@/features/auth/sign-in"
+import type { SignUpPayload, SignUpResult } from "@/features/auth/sign-up"
+import { publicApiClient } from "@/shared/api/client"
+import { typeSafeRequest } from "@/shared/lib/http"
 
-export async function signInWithCredentials(payload: {
-  email: string
-  password: string
-}) {
+export async function signInWithCredentials(payload: SignInPayload) {
   const searchParams = new URLSearchParams()
   searchParams.set("username", payload.email)
   searchParams.set("password", payload.password)
-  return await ResultAsync.fromThrowable(async () => {
-    return await apiClient.post<{ access_token: string }>("api/v1/auth/login", {
-      body: searchParams,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
-  })()
-    .map(async (response) => await response.json())
-    .mapErr((error) => {
-      const httpError = error as HTTPError
-      return {
-        type: "HTTP_ERROR",
-        status: httpError.response.status,
-        message: httpError.message,
-      }
-    })
+  return await typeSafeRequest(async () => {
+    return await publicApiClient
+      .post<SignInResult>("api/v1/auth/login", {
+        body: searchParams,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .json()
+  })
+}
+
+export async function registerUser(payload: SignUpPayload) {
+  return typeSafeRequest(async () => {
+    const wtf = await publicApiClient
+      .post<SignUpResult>("api/v1/auth/register", {
+        body: JSON.stringify(payload),
+      })
+      .json()
+    return wtf
+  })
 }
