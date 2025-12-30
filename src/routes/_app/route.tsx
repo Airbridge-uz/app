@@ -1,5 +1,5 @@
 import { getSessionToken } from "@/shared/lib/auth"
-import { ChatLayout } from "@/widgets/layouts/ui/chat-layout"
+import { AppLayout } from "@/widgets/layouts/ui/app-layout"
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/_app")({
@@ -17,8 +17,8 @@ export const Route = createFileRoute("/_app")({
 
 function RouteComponent() {
   return (
-    <ChatLayout>
+    <AppLayout>
       <Outlet />
-    </ChatLayout>
+    </AppLayout>
   )
 }

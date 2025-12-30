@@ -101,7 +101,7 @@ const conversationHistory = [
 
 function ChatSidebar() {
   return (
-    <Sidebar>
+    <Sidebar variant="sidebar">
       <SidebarHeader className="flex flex-row items-center justify-between gap-2 px-2 py-4">
         <div className="flex flex-row items-center gap-2 px-2">
           <div className="bg-primary/10 size-8 rounded-md"></div>

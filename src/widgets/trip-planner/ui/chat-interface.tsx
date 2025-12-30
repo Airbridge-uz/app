@@ -17,8 +17,6 @@ import {
   PromptInputTextarea,
 } from "@/shared/ui/prompt-input"
 import { ScrollButton } from "@/shared/ui/scroll-button"
-import { SidebarTrigger } from "@/shared/ui/sidebar"
-import { createFileRoute } from "@tanstack/react-router"
 import {
   ArrowUp,
   Copy,
@@ -33,7 +31,6 @@ import {
 } from "lucide-react"
 import { useRef, useState } from "react"
 
-// Initial chat messages
 const initialMessages = [
   {
     id: 1,
@@ -59,11 +56,7 @@ const initialMessages = [
   },
 ]
 
-export const Route = createFileRoute("/_app/dashboard/")({
-  component: RouteComponent,
-})
-
-function RouteComponent() {
+export function ChatInterface() {
   const [prompt, setPrompt] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [chatMessages, setChatMessages] = useState(initialMessages)
@@ -98,12 +91,7 @@ function RouteComponent() {
   }
 
   return (
-    <main className="flex h-screen flex-col overflow-hidden">
-      <header className="bg-background z-10 flex h-16 w-full shrink-0 items-center gap-2 border-b px-4">
-        <SidebarTrigger className="-ml-1" />
-        <div className="text-foreground">Project roadmap discussion</div>
-      </header>
-
+    <main className="flex h-[90vh] flex-col overflow-hidden">
       <div ref={chatContainerRef} className="relative flex-1 overflow-y-auto">
         <ChatContainerRoot className="h-full">
           <ChatContainerContent className="space-y-0 px-5 py-12">
@@ -164,7 +152,7 @@ function RouteComponent() {
                     </div>
                   ) : (
                     <div className="group flex flex-col items-end gap-1">
-                      <MessageContent className="bg-muted text-primary max-w-[85%] rounded-3xl px-5 py-2.5 sm:max-w-[75%]">
+                      <MessageContent className="bg-muted text-foreground max-w-[85%] rounded-3xl px-5 py-2.5 sm:max-w-[75%]">
                         {message.content}
                       </MessageContent>
                       <MessageActions

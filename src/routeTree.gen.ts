@@ -15,7 +15,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
-import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
+import { Route as AppTripsIndexRouteImport } from './routes/_app/trips/index'
+import { Route as AppSettingsIndexRouteImport } from './routes/_app/settings/index'
+import { Route as AppSavedIndexRouteImport } from './routes/_app/saved/index'
+import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
+import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/auth',
@@ -46,9 +50,29 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
+const AppTripsIndexRoute = AppTripsIndexRouteImport.update({
+  id: '/trips/',
+  path: '/trips/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingsIndexRoute = AppSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSavedIndexRoute = AppSavedIndexRouteImport.update({
+  id: '/saved/',
+  path: '/saved/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProfileIndexRoute = AppProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppChatIndexRoute = AppChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 
@@ -58,7 +82,11 @@ export interface FileRoutesByFullPath {
   '/api/chat': typeof ApiChatRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/dashboard': typeof AppDashboardIndexRoute
+  '/chat': typeof AppChatIndexRoute
+  '/profile': typeof AppProfileIndexRoute
+  '/saved': typeof AppSavedIndexRoute
+  '/settings': typeof AppSettingsIndexRoute
+  '/trips': typeof AppTripsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -66,7 +94,11 @@ export interface FileRoutesByTo {
   '/api/chat': typeof ApiChatRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/dashboard': typeof AppDashboardIndexRoute
+  '/chat': typeof AppChatIndexRoute
+  '/profile': typeof AppProfileIndexRoute
+  '/saved': typeof AppSavedIndexRoute
+  '/settings': typeof AppSettingsIndexRoute
+  '/trips': typeof AppTripsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -76,7 +108,11 @@ export interface FileRoutesById {
   '/api/chat': typeof ApiChatRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/_app/dashboard/': typeof AppDashboardIndexRoute
+  '/_app/chat/': typeof AppChatIndexRoute
+  '/_app/profile/': typeof AppProfileIndexRoute
+  '/_app/saved/': typeof AppSavedIndexRoute
+  '/_app/settings/': typeof AppSettingsIndexRoute
+  '/_app/trips/': typeof AppTripsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -86,7 +122,11 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/auth/login'
     | '/auth/signup'
-    | '/dashboard'
+    | '/chat'
+    | '/profile'
+    | '/saved'
+    | '/settings'
+    | '/trips'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -94,7 +134,11 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/auth/login'
     | '/auth/signup'
-    | '/dashboard'
+    | '/chat'
+    | '/profile'
+    | '/saved'
+    | '/settings'
+    | '/trips'
   id:
     | '__root__'
     | '/'
@@ -103,7 +147,11 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/auth/login'
     | '/auth/signup'
-    | '/_app/dashboard/'
+    | '/_app/chat/'
+    | '/_app/profile/'
+    | '/_app/saved/'
+    | '/_app/settings/'
+    | '/_app/trips/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -157,22 +205,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/dashboard/': {
-      id: '/_app/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardIndexRouteImport
+    '/_app/trips/': {
+      id: '/_app/trips/'
+      path: '/trips'
+      fullPath: '/trips'
+      preLoaderRoute: typeof AppTripsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/settings/': {
+      id: '/_app/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/saved/': {
+      id: '/_app/saved/'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof AppSavedIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/profile/': {
+      id: '/_app/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/chat/': {
+      id: '/_app/chat/'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof AppChatIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
   }
 }
 
 interface AppRouteRouteChildren {
-  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+  AppChatIndexRoute: typeof AppChatIndexRoute
+  AppProfileIndexRoute: typeof AppProfileIndexRoute
+  AppSavedIndexRoute: typeof AppSavedIndexRoute
+  AppSettingsIndexRoute: typeof AppSettingsIndexRoute
+  AppTripsIndexRoute: typeof AppTripsIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
-  AppDashboardIndexRoute: AppDashboardIndexRoute,
+  AppChatIndexRoute: AppChatIndexRoute,
+  AppProfileIndexRoute: AppProfileIndexRoute,
+  AppSavedIndexRoute: AppSavedIndexRoute,
+  AppSettingsIndexRoute: AppSettingsIndexRoute,
+  AppTripsIndexRoute: AppTripsIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

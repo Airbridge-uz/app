@@ -38,7 +38,7 @@ export function SignInForm() {
       }
       notifySuccess("Successfully signed in!")
       navigate({
-        to: "/dashboard",
+        to: "/chat",
       })
       form.reset()
     },
