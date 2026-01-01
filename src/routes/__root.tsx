@@ -1,6 +1,8 @@
 import { RootProvider } from "@/app/providers/root/provider"
 import appCss from "@/app/styles/styles.css?url"
 import { Toaster } from "@/shared/ui/sonner"
+import { aiDevtoolsPlugin } from "@tanstack/react-ai-devtools"
+import { TanStackDevtools } from "@tanstack/react-devtools"
 import {
   createRootRoute,
   HeadContent,
@@ -54,6 +56,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <RootProvider>
+      <TanStackDevtools
+        plugins={[
+          // ... other plugins
+          aiDevtoolsPlugin(),
+        ]}
+        // this config is important to connect to the server event bus
+        eventBusConfig={{
+          connectToServerBus: true,
+        }}
+      />
       <Outlet />
       <Toaster />
     </RootProvider>

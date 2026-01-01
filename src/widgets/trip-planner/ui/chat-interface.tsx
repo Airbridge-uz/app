@@ -1,3 +1,5 @@
+import { startChatMessageStream } from "@/services/chat"
+import { getCurrentUser } from "@/services/user"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 import {
@@ -17,6 +19,7 @@ import {
   PromptInputTextarea,
 } from "@/shared/ui/prompt-input"
 import { ScrollButton } from "@/shared/ui/scroll-button"
+import { getRouteApi } from "@tanstack/react-router"
 import {
   ArrowUp,
   Copy,
@@ -31,38 +34,44 @@ import {
 } from "lucide-react"
 import { useRef, useState } from "react"
 
+const routeApi = getRouteApi("/_app/chat/$chatId/")
+
 export function ChatInterface() {
   const [prompt, setPrompt] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [chatMessages, setChatMessages] = useState([])
   const chatContainerRef = useRef<HTMLDivElement>(null)
+  const routeParams = routeApi.useParams()
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!prompt.trim()) return
 
     setPrompt("")
     setIsLoading(true)
 
-    // Add user message immediately
-    const newUserMessage = {
-      id: chatMessages.length + 1,
-      role: "user",
-      content: prompt.trim(),
-    }
+    const user = await getCurrentUser()
+    if (user.isErr()) return
 
-    setChatMessages([...chatMessages, newUserMessage])
+    const response = await startChatMessageStream({
+      body: {
+        message: prompt.trim(),
+        session_id: routeParams.chatId,
+        user_id: user.value.id,
+        stream: true,
+      },
+    })
+    console.log(response.value, typeof response.value)
+    // // Simulate API response
+    // setTimeout(() => {
+    //   const assistantResponse = {
+    //     id: chatMessages.length + 2,
+    //     role: "assistant",
+    //     content: `This is a response to: "${prompt.trim()}"`,
+    //   }
 
-    // Simulate API response
-    setTimeout(() => {
-      const assistantResponse = {
-        id: chatMessages.length + 2,
-        role: "assistant",
-        content: `This is a response to: "${prompt.trim()}"`,
-      }
-
-      setChatMessages((prev) => [...prev, assistantResponse])
-      setIsLoading(false)
-    }, 1500)
+    //   setChatMessages((prev) => [...prev, assistantResponse])
+    //   setIsLoading(false)
+    // }, 1500)
   }
 
   return (

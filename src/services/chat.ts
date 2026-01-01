@@ -15,7 +15,7 @@ export async function sendChatMessage(payload: ApiRequestPayload<any>) {
  */
 export async function startChatMessageStream(payload: ApiRequestPayload<any>) {
   return await typeSafeRequest<any, undefined, Response>({
-    url: "api/v1/chat/stream",
+    url: "api/v1/chat/message/stream",
     method: "post",
     payload,
     isStream: true,
