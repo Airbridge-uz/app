@@ -61,11 +61,17 @@ export async function* responseToStreamChunks(
               } as any
             } else if (currentEvent === "thinking") {
               const json = JSON.parse(data)
+              const steps = json.steps || (json.content ? [json.content] : [])
+              const content = Array.isArray(steps)
+                ? steps.join("\n")
+                : String(steps)
               yield {
-                type: "metadata" as any,
-                value: { thinking: json.steps },
+                type: "thinking",
                 id,
                 timestamp,
+                delta: content,
+                content: content,
+                model: "",
               } as any
             } else if (currentEvent === "suggestions") {
               const json = JSON.parse(data)
@@ -74,6 +80,9 @@ export async function* responseToStreamChunks(
                 value: { suggestions: json },
                 id,
                 timestamp,
+                delta: "",
+                content: "",
+                model: "",
               } as any
             } else if (!currentEvent) {
               try {
@@ -107,12 +116,12 @@ export async function* responseToStreamChunks(
   }
 }
 
-export const Route = createFileRoute("/api/chat")({
+export const Route = createFileRoute("/api/chat/$chatId")({
   server: {
     handlers: {
-      POST: async ({ request }) => {
+      POST: async ({ request, params }) => {
         try {
-          const { messages, conversationId } = await request.json()
+          const { messages } = await request.json()
 
           // Get the last user message content
           const lastMessage = messages[messages.length - 1]
@@ -131,12 +140,13 @@ export const Route = createFileRoute("/api/chat")({
           const response = await startChatMessageStream({
             body: {
               message: userContent,
-              session_id: conversationId,
+              session_id: params.chatId,
               stream: true,
             },
           })
 
           if (response.isErr()) {
+            console.error("Error starting chat message stream:", response.error)
             return new Response(
               JSON.stringify({ error: (response.error as any).message }),
               {
@@ -152,13 +162,7 @@ export const Route = createFileRoute("/api/chat")({
           // Convert to SSE stream for the client
           const sseStream = toServerSentEventsStream(chunks)
 
-          return new Response(sseStream, {
-            headers: {
-              "Content-Type": "text/event-stream; charset=utf-8",
-              "Cache-Control": "no-cache, no-transform",
-              Connection: "keep-alive",
-            },
-          })
+          return new Response(sseStream)
         } catch (error) {
           console.error("API Chat Error:", error)
           return new Response(

@@ -44,8 +44,6 @@ export function ChatHistorySidebar() {
     chat.title.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
-  console.log(data)
-
   return (
     <div className="flex flex-col h-full bg-transparent">
       {/* Header */}
