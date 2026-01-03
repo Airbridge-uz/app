@@ -113,12 +113,12 @@ export function ChatInterface() {
             value={prompt}
             onValueChange={setPrompt}
             onSubmit={handleSubmit}
-            className="border-input bg-popover relative z-10 w-full rounded-3xl border p-0 pt-1 shadow-xs"
+            className="border-input bg-popover relative z-10 w-full rounded-3xl border p-0 shadow-xs"
           >
             <div className="flex justify-between items-center gap-6 px-3 py-2">
               <PromptInputTextarea
                 placeholder="Ask anything"
-                className="bg-transparent"
+                className="bg-transparent! min-h-auto"
               />
 
               <PromptInputActions className="flex items-center justify-between gap-2">
