@@ -21,7 +21,7 @@ import {
   type UseChatReturn,
 } from "@tanstack/ai-react"
 import { useQuery } from "@tanstack/react-query"
-import { getRouteApi } from "@tanstack/react-router"
+import { getRouteApi, useParams } from "@tanstack/react-router"
 import { ArrowUp, Loader2, Mic, Square } from "lucide-react"
 import { useRef, useState } from "react"
 import { ThinkingSteps } from "./thinking-steps"
@@ -30,7 +30,9 @@ const routeApi = getRouteApi("/_app/chat/$chatId/")
 
 export function ChatInterface() {
   const [prompt, setPrompt] = useState("")
-  const routeParams = routeApi.useParams()
+  const routeParams = useParams({
+    from: "/_app/chat/$chatId/",
+  })
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
   const { messages, sendMessage, isLoading, stop, setMessages, ...chatUtils } =
@@ -152,45 +154,44 @@ function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
     retry: false,
   })
 
-  return (
-    <>
-      {queryResult.isLoading && (
-        <div className="min-h-[60vh] flex items-center justify-center">
-          <Loader2 className="animate-spin w-8 h-8" />
-        </div>
-      )}
-      {messages.map((message) => {
-        const isAssistant = message.role === "assistant"
+  if (queryResult.isLoading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <Loader2 className="animate-spin w-8 h-8" />
+      </div>
+    )
+  }
 
-        return message.parts.map((part, index) => {
-          if (part.type === "thinking") {
-            return <ThinkingMessage part={part} index={index} />
-          }
+  return messages.map((message) => {
+    const isAssistant = message.role === "assistant"
 
-          return (
-            <Message
-              key={message.id}
-              className={cn(
-                "mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 mb-8",
-                isAssistant ? "items-start" : "items-end",
-              )}
-            >
-              {isAssistant ? (
-                <AssistantMessage
-                  part={part}
-                  messages={messages}
-                  index={index}
-                  isLoading={isLoading}
-                />
-              ) : (
-                <UserMessage part={part} />
-              )}
-            </Message>
-          )
-        })
-      })}
-    </>
-  )
+    return message.parts.map((part, index) => {
+      if (part.type === "thinking") {
+        return <ThinkingMessage part={part} key={index} index={index} />
+      }
+
+      return (
+        <Message
+          key={message.id}
+          className={cn(
+            "mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 mb-8",
+            isAssistant ? "items-start" : "items-end",
+          )}
+        >
+          {isAssistant ? (
+            <AssistantMessage
+              part={part}
+              messages={messages}
+              index={index}
+              isLoading={isLoading}
+            />
+          ) : (
+            <UserMessage part={part} />
+          )}
+        </Message>
+      )
+    })
+  })
 }
 
 function ThinkingMessage({ part }: { part: MessagePart; index: number }) {

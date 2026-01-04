@@ -28,10 +28,12 @@ export const Route = createFileRoute("/_app/chat/$chatId/")({
 })
 
 function RouteComponent() {
+  const params = Route.useParams()
+
   return (
     <>
       <main className="flex-1 overflow-hidden relative">
-        <ChatInterface />
+        <ChatInterface key={params.chatId} />
       </main>
 
       <aside
