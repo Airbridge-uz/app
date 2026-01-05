@@ -6,7 +6,7 @@ export function useTripPreview() {
   const store = useTripPreviewStore()
 
   function execute() {
-    store.openModal()
+    store.setMode("preview")
   }
 
   function previewItinerary(itinerary: TripData) {

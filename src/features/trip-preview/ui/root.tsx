@@ -6,7 +6,18 @@ import { useEffect } from "react"
 import { useTripPreviewStore } from "../model/store"
 
 export function TripPreview() {
+  return (
+    <>
+      <Dynamic />
+      <RouteWatcher />
+    </>
+  )
+}
+
+function Dynamic() {
   const store = useTripPreviewStore()
+
+  if (store.mode === "hidden") return null
 
   return (
     <aside className="p-3 bg-background/70 border-l max-w-md min-w-md">
@@ -28,18 +39,18 @@ export function TripPreview() {
           {store.offers && <FlightOffersList offers={store.offers} />}
         </TabsContent>
       </Tabs>
-      <RouteWatcher />
     </aside>
   )
 }
 
 function RouteWatcher() {
-  const store = useTripPreviewStore()
+  const store = useTripPreviewStore.getState()
   const params = useParams({
     from: "/_app/chat/$chatId/",
   })
 
   useEffect(() => {
+    store.setMode("hidden")
     store.setOffers([])
     store.setItinerary(null)
     store.setSelectedOffer(null)

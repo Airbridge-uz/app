@@ -9,9 +9,8 @@ interface TripPreviewStore {
   setSelectedOffer: (offer: FlightOffer | null) => void
   setItinerary: (itinerary: TripData | null) => void
   setOffers: (offers: FlightOffer[]) => void
-  openModal: () => void
-  closeModal: () => void
-  isModalOpen: boolean
+  mode: "preview" | "hidden" | "fullscreen"
+  setMode: (mode: "preview" | "hidden" | "fullscreen") => void
 }
 
 export const useTripPreviewStore = create<TripPreviewStore>((set) => ({
@@ -21,13 +20,16 @@ export const useTripPreviewStore = create<TripPreviewStore>((set) => ({
   setSelectedOffer: (offer) => set({ selectedOffer: offer }),
   setItinerary: (itinerary) => set({ itinerary }),
   setOffers: (offers) => set({ offers }),
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () =>
-    set({
-      isModalOpen: false,
-      selectedOffer: null,
-      itinerary: null,
-      offers: null,
-    }),
-  isModalOpen: false,
+  mode: "hidden",
+  setMode: (mode) => {
+    if (mode === "hidden") {
+      return set({
+        itinerary: null,
+        offers: null,
+        selectedOffer: null,
+        mode,
+      })
+    }
+    return set({ mode })
+  },
 }))

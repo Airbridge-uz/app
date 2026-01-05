@@ -42,13 +42,11 @@ export function ChatInterface() {
       connection: fetchServerSentEvents(`/api/chat/${routeParams.chatId}`),
       onChunk(chunk: any) {
         if (chunk.type === "itinerary") {
-          console.log(chunk.payload)
+          execute()
           previewItinerary(chunk.payload)
-          execute()
         } else if (chunk.type === "flight_cards") {
-          console.log(chunk.payload)
-          previewOffers(chunk.payload)
           execute()
+          previewOffers(chunk.payload)
         }
       },
     })
