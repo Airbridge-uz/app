@@ -18,13 +18,10 @@ export const Route = createFileRoute("/_app/chat/$chatId/")({
     const doesConversationExist = existingConversations?.conversations?.some(
       (conversation) => conversation.session_id === chatId,
     )
-    if (!doesConversationExist) {
-      if (
-        existingConversations?.conversations === null ||
-        existingConversations?.conversations === undefined
-      ) {
-        return
-      }
+    if (
+      !doesConversationExist &&
+      existingConversations?.conversations.length > 0
+    ) {
       throw redirect({
         to: "/chat/$chatId",
         params: {
