@@ -3,18 +3,31 @@ import type {
   ThinkingEventChunk,
   TokenEventChunk,
 } from "@/entities/chat-stream"
-import type { ContentStreamChunk, ThinkingStreamChunk } from "@tanstack/ai"
+import type {
+  ContentStreamChunk,
+  ErrorStreamChunk,
+  ThinkingStreamChunk,
+} from "@tanstack/ai"
+import { Result } from "neverthrow"
 import { CryptoIdGenerator } from "./id-generator"
 
 export abstract class EventParser {
-  abstract parse<T = unknown>(data: string): T
+  abstract parse<T = unknown>(data: string): Result<T, Error>
 }
 
 export class TokenParser implements EventParser {
   private readonly idGenerator = CryptoIdGenerator.new()
 
-  parse<T = TokenEventChunk>(data: string): T {
-    return JSON.parse(data) as T
+  parse<T = TokenEventChunk>(data: string): Result<T, Error> {
+    return Result.fromThrowable(
+      () => JSON.parse(data) as T,
+      (e) => {
+        if (e instanceof Error) return e
+        return new Error("Unknown error during parsing", {
+          cause: e,
+        })
+      },
+    )()
   }
 
   self(): TokenParser {
@@ -44,8 +57,11 @@ export class TokenParser implements EventParser {
 export class ThinkingParser implements EventParser {
   private readonly idGenerator = CryptoIdGenerator.new()
 
-  parse<T = ThinkingEventChunk>(data: string): T {
-    return JSON.parse(data) as T
+  parse<T = ThinkingEventChunk>(data: string): Result<T, Error> {
+    return Result.fromThrowable(
+      () => JSON.parse(data) as T,
+      (e) => e as Error,
+    )()
   }
 
   self(): ThinkingParser {
@@ -74,8 +90,11 @@ export class ThinkingParser implements EventParser {
 export class SuggestionsParser implements EventParser {
   private readonly idGenerator = CryptoIdGenerator.new()
 
-  parse<T = SuggestionsEventChunk>(data: string): T {
-    return JSON.parse(data) as T
+  parse<T = SuggestionsEventChunk>(data: string): Result<T, Error> {
+    return Result.fromThrowable(
+      () => JSON.parse(data) as T,
+      (e) => e as Error,
+    )()
   }
 
   self(): SuggestionsParser {
@@ -108,5 +127,32 @@ export class SuggestionsParser implements EventParser {
         value: SuggestionsEventChunk
       }
     }
+  }
+}
+
+export class ErrorChunkParser {
+  private readonly idGenerator = CryptoIdGenerator.new()
+
+  static new(): ErrorChunkParser {
+    return new ErrorChunkParser()
+  }
+
+  self(): ErrorChunkParser {
+    return this
+  }
+
+  format(errorMessage: string) {
+    const id = this.idGenerator.generate()
+    const timestamp = Date.now()
+
+    return {
+      id,
+      timestamp,
+      type: "error",
+      model: "gpt-5.1",
+      error: {
+        message: errorMessage,
+      },
+    } satisfies ErrorStreamChunk
   }
 }

@@ -1,6 +1,7 @@
 import { startChatMessageStream } from "@/services/chat"
 import { getCurrentUser } from "@/services/user"
 import {
+  ErrorChunkParser,
   SuggestionsParser,
   ThinkingParser,
   TokenParser,
@@ -19,6 +20,7 @@ export async function* responseToStreamChunks(
   let buffer = ""
   let currentEvent = ""
   const iterable: AsyncIterable<Uint8Array | string> = streamInput.body as any
+  const errorChunkParser = ErrorChunkParser.new()
 
   try {
     for await (const value of iterable) {
@@ -40,16 +42,28 @@ export async function* responseToStreamChunks(
 
           if (currentEvent === "token") {
             const tokenParser = TokenParser.new()
-            const json = tokenParser.parse(data)
-            yield tokenParser.format(json)
+            const parseResult = tokenParser.parse(data)
+            if (parseResult.isErr()) {
+              yield errorChunkParser.format(parseResult.error.message)
+              continue
+            }
+            yield tokenParser.format(parseResult.value)
           } else if (currentEvent === "thinking") {
             const thinkingParser = ThinkingParser.new()
-            const json = thinkingParser.parse(data)
-            yield thinkingParser.format(json)
+            const parseResult = thinkingParser.parse(data)
+            if (parseResult.isErr()) {
+              yield errorChunkParser.format(parseResult.error.message)
+              continue
+            }
+            yield thinkingParser.format(parseResult.value)
           } else if (currentEvent === "suggestions") {
             const suggestionsParser = SuggestionsParser.new()
-            const json = suggestionsParser.parse(data)
-            yield suggestionsParser.format(json)
+            const parseResult = suggestionsParser.parse(data)
+            if (parseResult.isErr()) {
+              yield errorChunkParser.format(parseResult.error.message)
+              continue
+            }
+            yield suggestionsParser.format(parseResult.value)
           } else if (currentEvent === "status") {
             const statusData = JSON.parse(data)
             yield {
