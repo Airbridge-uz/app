@@ -75,14 +75,14 @@ export function ChatInterface() {
               {...chatUtils}
             />
           </ChatContainerContent>
-          <div className="absolute bottom-4 left-1/2 flex w-full max-w-3xl -translate-x-1/2 justify-end px-5">
+          <div className="absolute bottom-4 left-1/2 flex w-full max-w-7xl -translate-x-1/2 justify-end px-5">
             <ScrollButton className="shadow-sm" />
           </div>
         </ChatContainerRoot>
       </div>
 
       <div className="bg-background z-10 shrink-0 px-3 pb-3 md:px-5 md:pb-5">
-        <div className="mx-auto max-w-3xl">
+        <div className="max-w-7xl mx-auto">
           <PromptInput
             isLoading={isLoading}
             value={prompt}
@@ -185,7 +185,7 @@ function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
         <Message
           key={message.id}
           className={cn(
-            "mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 mb-8",
+            "mx-auto flex w-full max-w-7xl flex-col gap-2 px-6 mb-8",
             isAssistant ? "items-start" : "items-end",
           )}
         >
@@ -209,7 +209,7 @@ function ThinkingMessage({ part }: { part: MessagePart; index: number }) {
   if (part.type !== "thinking") return null
 
   return (
-    <div className="max-w-3xl mx-auto w-full">
+    <div className="max-w-7xl mx-auto w-full">
       <ThinkingSteps steps={part.content.split("\n")} />
     </div>
   )
