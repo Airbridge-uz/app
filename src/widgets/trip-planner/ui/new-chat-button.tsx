@@ -1,5 +1,5 @@
 import { queryClient } from "@/app/providers/tanstack-query/provider"
-import type { ChatSession } from "@/entities/chat"
+import { getEmptyConversation } from "@/entities/conversation"
 import { CryptoIdGenerator } from "@/shared/lib/id-generator"
 import { useGetConversationListQuery } from "@/shared/queries/conversation"
 import { Button } from "@/shared/ui/button"
@@ -17,16 +17,7 @@ export function NewChatButton() {
       const prevData = queryClient.getQueryData(query.getKey())
       if (!prevData) return prevData
 
-      const newConversation: ChatSession = {
-        has_flights: false,
-        has_itinerary: false,
-        last_message_at: null,
-        message_count: 0,
-        session_id: randomChatId,
-        title: "New chat",
-        preview: null,
-        trip_id: null,
-      }
+      const newConversation = getEmptyConversation(randomChatId)
 
       return {
         conversations: [newConversation, ...prevData.conversations],
