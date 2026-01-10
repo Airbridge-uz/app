@@ -142,6 +142,7 @@ export function ChatInterface() {
 }
 
 function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
+  const { previewItinerary, previewOffers, execute } = useTripPreview()
   const routeParams = routeApi.useParams()
   const queryResult = useQuery({
     queryKey: ["conversation", routeParams.chatId],
@@ -151,6 +152,17 @@ function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
         setMessages([])
         throw new Error(result.error.message)
       }
+
+      if (result.value.flight_cards) {
+        previewOffers(result.value.flight_cards)
+        execute()
+      }
+
+      if (result.value.itinerary_data) {
+        previewItinerary(result.value.itinerary_data)
+        execute()
+      }
+
       setMessages(
         (result.value ?? []).messages.map((message) => {
           return {

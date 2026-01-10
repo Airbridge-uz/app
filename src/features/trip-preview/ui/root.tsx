@@ -27,13 +27,13 @@ function Dynamic() {
           <TabsTrigger value="flightOffers">Flight offers</TabsTrigger>
         </TabsList>
         <TabsContent
-          className="overflow-auto max-h-[85vh]"
+          className="overflow-auto max-h-[75vh] p-1"
           value="itineraryPlan"
         >
           {store.itinerary && <TripItinerary data={store.itinerary} />}
         </TabsContent>
         <TabsContent
-          className="overflow-auto max-h-[85vh]"
+          className="overflow-auto max-h-[75vh] p-1"
           value="flightOffers"
         >
           {store.offers && <FlightOffersList offers={store.offers} />}

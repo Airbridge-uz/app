@@ -1,13 +1,13 @@
 import type { FlightOffer } from "@/features/flight-search"
-import type { TripData } from "@/widgets/trip-planner/ui/trip-itinerary"
+import type { ItineraryData } from "@/widgets/trip-planner/ui/trip-itinerary"
 import { create } from "zustand"
 
 interface TripPreviewStore {
-  itinerary: TripData | null
+  itinerary: ItineraryData | null
   offers: FlightOffer[] | null
   selectedOffer: FlightOffer | null
   setSelectedOffer: (offer: FlightOffer | null) => void
-  setItinerary: (itinerary: TripData | null) => void
+  setItinerary: (itinerary: ItineraryData | null) => void
   setOffers: (offers: FlightOffer[]) => void
   mode: "preview" | "hidden" | "fullscreen"
   setMode: (mode: "preview" | "hidden" | "fullscreen") => void

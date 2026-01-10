@@ -1,23 +1,43 @@
 import type { ChatSession } from "@/entities/chat"
+import type { FlightOffer } from "@/features/flight-search"
 import { typeSafeRequest } from "@/shared/lib/http"
 import type { ApiRequestPayload } from "@/shared/types/http"
+import type { ItineraryData } from "@/widgets/trip-planner/ui/trip-itinerary"
 
 export type GetConversationByIdResult = {
   session_id: string
-  trip_id: number
-  messages: Array<{
-    id: string
-    role: string
-    content: string
-    timestamp: string
-    ui: {
-      type: string
-      data: string
-      is_expired: boolean
-      expires_in_minutes: number
-      expiration_message: string
-    }
-  }>
+  trip_id: number | null
+  messages: Array<ConversationMessage>
+} & (ConversationWithFlightCards | ConversationWithoutFlightCards) &
+  ConversationWithItinerary
+
+export type ConversationWithFlightCards = {
+  flight_cards: Array<FlightOffer>
+  flight_cards_expired: boolean
+}
+
+export type ConversationWithoutFlightCards = {
+  flight_cards: null
+  flight_cards_expired: null
+}
+
+export type ConversationWithItinerary = {
+  itinerary_data: ItineraryData
+  itinerary_grounding: unknown
+}
+
+export type ConversationMessage = {
+  id: string
+  role: string
+  content: string
+  timestamp: string
+  ui: {
+    type: string
+    data: string
+    is_expired: boolean
+    expires_in_minutes: number
+    expiration_message: string
+  }
 }
 
 export type GetConversationListResult = {

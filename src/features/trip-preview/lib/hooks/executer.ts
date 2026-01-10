@@ -1,5 +1,5 @@
 import type { FlightOffer } from "@/features/flight-search"
-import type { TripData } from "@/widgets/trip-planner/ui/trip-itinerary"
+import type { ItineraryData } from "@/widgets/trip-planner/ui/trip-itinerary"
 import { useTripPreviewStore } from "../../model/store"
 
 export function useTripPreview() {
@@ -9,7 +9,7 @@ export function useTripPreview() {
     store.setMode("preview")
   }
 
-  function previewItinerary(itinerary: TripData) {
+  function previewItinerary(itinerary: ItineraryData) {
     store.setItinerary(itinerary)
   }
 

@@ -48,7 +48,7 @@ interface TripDay {
   currency: string
 }
 
-export interface TripData {
+export interface ItineraryData {
   trip_title: string
   city: string
   country_code: string
@@ -70,7 +70,7 @@ const getCategoryIcon = (category: string) => {
   return MapPin
 }
 
-export function TripItinerary({ data }: { data: TripData }) {
+export function TripItinerary({ data }: { data: ItineraryData }) {
   if (!data) return null
 
   return (

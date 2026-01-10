@@ -1,11 +1,11 @@
-import type { TripData } from "@/widgets/trip-planner/ui/trip-itinerary"
+import type { ItineraryData } from "@/widgets/trip-planner/ui/trip-itinerary"
 import { create } from "zustand"
 
 export const useItineraryPreviewStore = create<{
   isModalOpen: boolean
   setIsModalOpen: (value: boolean) => void
-  itinerary: TripData | null
-  setItinerary: (value: TripData | null) => void
+  itinerary: ItineraryData | null
+  setItinerary: (value: ItineraryData | null) => void
 }>()((set) => ({
   isModalOpen: false,
   setIsModalOpen: (value: boolean) => {
@@ -15,5 +15,5 @@ export const useItineraryPreviewStore = create<{
     return set({ isModalOpen: value })
   },
   itinerary: null,
-  setItinerary: (value: TripData | null) => set({ itinerary: value }),
+  setItinerary: (value: ItineraryData | null) => set({ itinerary: value }),
 }))
