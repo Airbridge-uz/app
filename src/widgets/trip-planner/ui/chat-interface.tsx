@@ -142,7 +142,8 @@ export function ChatInterface() {
 }
 
 function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
-  const { previewItinerary, previewOffers, execute } = useTripPreview()
+  const { previewItinerary, previewOffers, setSearchInfo, execute } =
+    useTripPreview()
   const routeParams = routeApi.useParams()
   const queryResult = useQuery({
     queryKey: ["conversation", routeParams.chatId],
@@ -160,6 +161,11 @@ function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
 
       if (result.value.itinerary_data) {
         previewItinerary(result.value.itinerary_data)
+        execute()
+      }
+
+      if (result.value.search_info) {
+        setSearchInfo(result.value.search_info)
         execute()
       }
 

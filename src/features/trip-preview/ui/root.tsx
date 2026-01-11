@@ -1,9 +1,10 @@
 import { FlightOffersList } from "@/features/flight-search/ui/flight-offers-list"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs"
 import { TripItinerary } from "@/widgets/trip-planner/ui"
-import { useParams } from "@tanstack/react-router"
+import { Link, useParams } from "@tanstack/react-router"
 import { useEffect } from "react"
 import { useTripPreviewStore } from "../model/store"
+import { CreateTripButton } from "./create-trip-button"
 
 export function TripPreview() {
   return (
@@ -38,9 +39,38 @@ function Dynamic() {
         >
           {store.offers && <FlightOffersList offers={store.offers} />}
         </TabsContent>
+        <div className="flex justify-end">
+          {store.tripId ? (
+            <Link to="/trips" className="w-full">
+              Open trip
+            </Link>
+          ) : (
+            <CreateTripProvider />
+          )}
+        </div>
       </Tabs>
     </aside>
   )
+}
+
+function CreateTripProvider() {
+  const store = useTripPreviewStore()
+  const { chatId } = useParams({
+    from: "/_app/chat/$chatId/",
+  })
+
+  if (store.itinerary && store.offers && store.searchInfo) {
+    return (
+      <CreateTripButton
+        itinerary={store.itinerary}
+        flightOffers={store.offers}
+        searchInfo={store.searchInfo}
+        sessionId={chatId}
+      />
+    )
+  }
+
+  return null
 }
 
 function RouteWatcher() {

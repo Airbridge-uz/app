@@ -22,6 +22,7 @@ import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index
 import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as ApiChatChatIdRouteImport } from './routes/api/chat.$chatId'
 import { Route as AppChatNewRouteImport } from './routes/_app/chat/new'
+import { Route as AppTripsTripIdIndexRouteImport } from './routes/_app/trips/$tripId/index'
 import { Route as AppChatChatIdIndexRouteImport } from './routes/_app/chat/$chatId/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -88,6 +89,11 @@ const AppChatNewRoute = AppChatNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AppChatRouteRoute,
 } as any)
+const AppTripsTripIdIndexRoute = AppTripsTripIdIndexRouteImport.update({
+  id: '/trips/$tripId/',
+  path: '/trips/$tripId/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppChatChatIdIndexRoute = AppChatChatIdIndexRouteImport.update({
   id: '/$chatId/',
   path: '/$chatId/',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsIndexRoute
   '/trips': typeof AppTripsIndexRoute
   '/chat/$chatId': typeof AppChatChatIdIndexRoute
+  '/trips/$tripId': typeof AppTripsTripIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AppSettingsIndexRoute
   '/trips': typeof AppTripsIndexRoute
   '/chat/$chatId': typeof AppChatChatIdIndexRoute
+  '/trips/$tripId': typeof AppTripsTripIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/_app/settings/': typeof AppSettingsIndexRoute
   '/_app/trips/': typeof AppTripsIndexRoute
   '/_app/chat/$chatId/': typeof AppChatChatIdIndexRoute
+  '/_app/trips/$tripId/': typeof AppTripsTripIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/trips'
     | '/chat/$chatId'
+    | '/trips/$tripId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/trips'
     | '/chat/$chatId'
+    | '/trips/$tripId'
   id:
     | '__root__'
     | '/'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/_app/settings/'
     | '/_app/trips/'
     | '/_app/chat/$chatId/'
+    | '/_app/trips/$tripId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,6 +300,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatNewRouteImport
       parentRoute: typeof AppChatRouteRoute
     }
+    '/_app/trips/$tripId/': {
+      id: '/_app/trips/$tripId/'
+      path: '/trips/$tripId'
+      fullPath: '/trips/$tripId'
+      preLoaderRoute: typeof AppTripsTripIdIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/chat/$chatId/': {
       id: '/_app/chat/$chatId/'
       path: '/$chatId'
@@ -320,6 +339,7 @@ interface AppRouteRouteChildren {
   AppSavedIndexRoute: typeof AppSavedIndexRoute
   AppSettingsIndexRoute: typeof AppSettingsIndexRoute
   AppTripsIndexRoute: typeof AppTripsIndexRoute
+  AppTripsTripIdIndexRoute: typeof AppTripsTripIdIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -328,6 +348,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppSavedIndexRoute: AppSavedIndexRoute,
   AppSettingsIndexRoute: AppSettingsIndexRoute,
   AppTripsIndexRoute: AppTripsIndexRoute,
+  AppTripsTripIdIndexRoute: AppTripsTripIdIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
