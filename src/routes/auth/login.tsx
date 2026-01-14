@@ -1,8 +1,6 @@
 import { SignIn } from "@/features/auth/sign-in"
-import { Button } from "@/shared/ui/button"
 import { CardContent, CardHeader, CardTitle } from "@/shared/ui/card"
 import { ModeToggle } from "@/widgets/theme-toggle"
-import { Separator } from "@base-ui/react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/auth/login")({
@@ -28,16 +26,6 @@ export const Route = createFileRoute("/auth/login")({
               Create an account
             </Link>
           </p>
-
-          <div className="flex items-center gap-4">
-            <Separator className="flex-1" />
-            <p>or</p>
-            <Separator className="flex-1" />
-          </div>
-
-          <Button variant="secondary" className="w-full">
-            Sign in with google
-          </Button>
         </div>
       </CardContent>
     </>

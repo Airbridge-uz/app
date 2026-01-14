@@ -3,63 +3,14 @@ import { Badge } from "@/shared/ui/badge"
 import { Button } from "@/shared/ui/button"
 import { Card } from "@/shared/ui/card"
 import { ArrowRight, Backpack, Briefcase, Plane, Star, Zap } from "lucide-react"
+import type { FlightOfferPresenter } from "../model/types"
 
-export interface FlightOffer {
-  offer_id: string
-  rank: number
-  label: string
-  airline: {
-    code: string
-    name: string
-    logo_url: string
-  }
-  price: {
-    amount: number
-    currency: string
-    display: string
-  }
-  duration: {
-    display: string
-  }
-  stops: {
-    display: string
-    count: number
-  }
-  slices: Array<{
-    origin: { code: string; name: string; city: string }
-    destination: { code: string; name: string; city: string }
-    departure: { time: string; date: string }
-    arrival: { time: string; date: string }
-    duration: { display: string }
-    stops: number
-    segments: Array<{
-      flight_number: string
-      cabin_class: string
-    }>
-  }>
-  baggage: {
-    cabin: { allowed: boolean; quantity: number }
-    checked: { allowed: boolean; quantity: number }
-  }
-}
-
-interface FlightOfferCardProps {
-  offer: FlightOffer
-  onSelect?: (offer: FlightOffer) => void
-  className?: string
-}
-
-export function FlightOfferCard({
-  offer,
-  onSelect,
-  className,
-}: FlightOfferCardProps) {
+export function FlightOfferCard({ offer, onSelect }: FlightOfferPresenter) {
   return (
     <Card
       className={cn(
         "relative overflow-hidden group transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 border-border/40 bg-card/40 backdrop-blur-xl",
         offer.rank === 1 && "border-primary/30 bg-primary/5",
-        className,
       )}
     >
       {/* Selection Glow */}
@@ -68,10 +19,10 @@ export function FlightOfferCard({
       {/* Rank/Label Badge */}
       <div className="absolute top-0 right-0 pt-4 pr-4">
         <Badge
-          variant={offer.label.includes("Overall") ? "default" : "secondary"}
+          variant={offer.label?.includes("Overall") ? "default" : "secondary"}
           className="rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-tighter gap-1.5 shadow-sm"
         >
-          {offer.label.includes("Overall") ? (
+          {offer.label?.includes("Overall") ? (
             <Star className="size-3 fill-current" />
           ) : (
             <Zap className="size-3 fill-current" />
@@ -227,25 +178,5 @@ export function FlightOfferCard({
         </div>
       </div>
     </Card>
-  )
-}
-
-export function FlightOffersList({
-  offers,
-  onSelect,
-}: {
-  offers: FlightOffer[]
-  onSelect?: (offer: FlightOffer) => void
-}) {
-  return (
-    <div className="grid grid-cols-1 gap-4 w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
-      {offers.map((offer) => (
-        <FlightOfferCard
-          key={offer.offer_id}
-          offer={offer}
-          onSelect={onSelect}
-        />
-      ))}
-    </div>
   )
 }

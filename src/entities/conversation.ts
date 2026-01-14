@@ -1,9 +1,7 @@
-import type { ChatSession } from "./chat"
-
 export function getEmptyConversation(
   conversationId: string,
   title: string = "New chat",
-): ChatSession {
+) {
   return {
     has_flights: false,
     has_itinerary: false,
@@ -13,5 +11,12 @@ export function getEmptyConversation(
     session_id: conversationId,
     trip_id: null,
     title,
+    messages: [],
+    flight_cards: [],
+    suggestions: [],
+    search_info: null,
+    itinerary_data: null,
+    itinerary_grounding: null,
+    flight_cards_expired: false,
   }
 }

@@ -1,12 +1,5 @@
 import { SignUp } from "@/features/auth/sign-up"
-import { Button } from "@/shared/ui/button"
-import {
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui/card"
-import { Separator } from "@/shared/ui/separator"
+import { CardContent, CardHeader, CardTitle } from "@/shared/ui/card"
 import { ModeToggle } from "@/widgets/theme-toggle"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
@@ -32,22 +25,11 @@ function RouteComponent() {
               to="/auth/login"
               className="text-card-foreground hover:underline"
             >
-              Create an account
+              Log in
             </Link>
           </p>
         </div>
       </CardContent>
-      <CardFooter className="flex-col space-y-4">
-        <div className="flex items-center gap-4">
-          <Separator className="flex-1" />
-          <p>or</p>
-          <Separator className="flex-1" />
-        </div>
-
-        <Button variant="secondary" className="w-full">
-          Sign in with google
-        </Button>
-      </CardFooter>
     </>
   )
 }

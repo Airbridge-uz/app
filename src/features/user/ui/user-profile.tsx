@@ -1,3 +1,4 @@
+import { queryClient } from "@/app/providers/tanstack-query/provider"
 import { logOut } from "@/shared/lib/auth"
 import { cn } from "@/shared/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
@@ -37,6 +38,7 @@ export function UserProfile({ user, isCollapsed }: UserProfileProps) {
     .toUpperCase()
 
   async function handleLogout() {
+    queryClient.clear()
     await logOutFn()
     navigate({ to: "/auth/login" })
   }
