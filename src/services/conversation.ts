@@ -1,5 +1,5 @@
-import type { ChatSession } from "@/entities/chat"
-import type { FlightOffer } from "@/features/flight-search"
+import type { ChatSession, SearchInfo } from "@/entities/chat"
+import type { FlightOffer } from "@/entities/flight-offer"
 import { typeSafeRequest } from "@/shared/lib/http"
 import type { ApiRequestPayload } from "@/shared/types/http"
 import type { ItineraryData } from "@/widgets/trip-planner/ui/trip-itinerary"
@@ -9,7 +9,8 @@ export type GetConversationByIdResult = {
   trip_id: number | null
   messages: Array<ConversationMessage>
 } & (ConversationWithFlightCards | ConversationWithoutFlightCards) &
-  ConversationWithItinerary
+  ConversationWithItinerary &
+  ConversationWithSearchInfo
 
 export type ConversationWithFlightCards = {
   flight_cards: Array<FlightOffer>
@@ -24,6 +25,10 @@ export type ConversationWithoutFlightCards = {
 export type ConversationWithItinerary = {
   itinerary_data: ItineraryData
   itinerary_grounding: unknown
+}
+
+export type ConversationWithSearchInfo = {
+  search_info: SearchInfo
 }
 
 export type ConversationMessage = {

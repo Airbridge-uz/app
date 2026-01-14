@@ -1,3 +1,5 @@
+import type { ConversationMessage } from "@/services/conversation"
+
 export interface Message {
   id?: string | null
   role: "user" | "assistant"
@@ -67,4 +69,5 @@ export interface ChatSession {
   preview: string | null
   has_flights: boolean
   has_itinerary: boolean
+  messages: ConversationMessage[]
 }

@@ -1,5 +1,5 @@
+import type { FlightOffer } from "@/entities/flight-offer"
 import { create } from "zustand"
-import type { FlightOffer } from "../ui/flight-offers-list"
 
 export const useFlightPreviewStore = create<{
   isModalOpen: boolean

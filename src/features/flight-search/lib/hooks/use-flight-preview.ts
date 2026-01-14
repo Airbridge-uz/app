@@ -1,5 +1,5 @@
+import type { FlightOffer } from "@/entities/flight-offer"
 import { useFlightPreviewStore } from "../../model/store"
-import type { FlightOffer } from "../../ui/flight-offers-list"
 
 export function useFlightPreview() {
   const store = useFlightPreviewStore()

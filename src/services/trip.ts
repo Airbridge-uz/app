@@ -31,7 +31,6 @@ export async function getTripById(
   return await typeSafeRequest<undefined, { tripId: number }, Trip>({
     url: `api/v1/trips/${payload.params?.tripId}`,
     method: "get",
-    payload,
   })
 }
 

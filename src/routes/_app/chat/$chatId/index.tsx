@@ -29,6 +29,23 @@ export const Route = createFileRoute("/_app/chat/$chatId/")({
         },
       })
     }
+    if (
+      !doesConversationExist &&
+      existingConversations.conversations.length === 0
+    ) {
+      const emptyConversation = getEmptyConversation(chatId)
+      queryClient.setQueryData(["conversation", chatId], emptyConversation)
+      queryClient.setQueryData(conversationListQueryKey, {
+        conversations: [emptyConversation],
+        total: 1,
+      })
+      throw redirect({
+        to: "/chat/$chatId",
+        params: {
+          chatId,
+        },
+      })
+    }
     const getConversationQueryResult = queryClient.ensureQueryData({
       queryKey: ["conversation", chatId],
       queryFn: async () => {

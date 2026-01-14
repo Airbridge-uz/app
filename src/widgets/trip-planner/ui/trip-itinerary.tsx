@@ -1,4 +1,3 @@
-import { SuggestionCard } from "@/features/trip-planner/ui/suggestion-card"
 import { Badge } from "@/shared/ui/badge"
 import { Button } from "@/shared/ui/button"
 import { ScrollArea } from "@/shared/ui/scroll-area"
@@ -19,6 +18,7 @@ import {
   Star,
   Utensils,
 } from "lucide-react"
+import { SuggestionCard } from "./suggestion-card"
 
 interface DayActivity {
   time: string

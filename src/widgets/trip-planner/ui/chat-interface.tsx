@@ -23,7 +23,7 @@ import {
 } from "@tanstack/ai-react"
 import { useQuery } from "@tanstack/react-query"
 import { getRouteApi, useParams } from "@tanstack/react-router"
-import { ArrowUp, Loader2, Mic, Square } from "lucide-react"
+import { ArrowUp, Globe, Loader2, Mic, Square } from "lucide-react"
 import { useRef, useState } from "react"
 import { ThinkingSteps } from "./thinking-steps"
 
@@ -46,7 +46,7 @@ export function ChatInterface() {
           previewItinerary(chunk.payload)
         } else if (chunk.type === "flight_cards") {
           execute()
-          previewOffers(chunk.payload)
+          previewOffers(chunk.payload, false)
         }
       },
     })
@@ -142,7 +142,8 @@ export function ChatInterface() {
 }
 
 function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
-  const { previewItinerary, previewOffers, execute } = useTripPreview()
+  const { previewItinerary, previewOffers, setSearchInfo, setTripId, execute } =
+    useTripPreview()
   const routeParams = routeApi.useParams()
   const queryResult = useQuery({
     queryKey: ["conversation", routeParams.chatId],
@@ -154,13 +155,25 @@ function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
       }
 
       if (result.value.flight_cards) {
-        previewOffers(result.value.flight_cards)
+        previewOffers(
+          result.value.flight_cards,
+          result.value.flight_cards_expired,
+        )
         execute()
       }
 
       if (result.value.itinerary_data) {
         previewItinerary(result.value.itinerary_data)
         execute()
+      }
+
+      if (result.value.search_info) {
+        setSearchInfo(result.value.search_info)
+        execute()
+      }
+
+      if (result.value.trip_id) {
+        setTripId(result.value.trip_id)
       }
 
       setMessages(
@@ -181,6 +194,27 @@ function Messages({ setMessages, messages, isLoading }: UseChatReturn<any>) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <Loader2 className="animate-spin w-8 h-8" />
+      </div>
+    )
+  }
+
+  if (messages.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-4xl mx-auto space-y-8 px-4">
+        <div className="flex flex-col items-center justify-center space-y-6 text-center">
+          <div className="p-4 rounded-full bg-primary/5 border border-primary/10 shadow-sm">
+            <Globe className="w-10 h-10 text-primary animate-pulse-slow" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-semibold tracking-tight">
+              How can I help you with your journey?
+            </h1>
+            <p className="text-muted-foreground text-lg">
+              Plan your next adventure, find flights, or explore new
+              destinations.
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

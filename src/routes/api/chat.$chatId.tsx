@@ -125,6 +125,7 @@ export const Route = createFileRoute("/api/chat/$chatId")({
               session_id: params.chatId,
               stream: true,
               user_id: currentUser.value.id,
+              save_trip: true,
             },
           })
 

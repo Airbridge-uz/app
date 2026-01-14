@@ -6,7 +6,5 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.fixAll.biome": "explicit"
-  },
-  "workbench.colorCustomizations": {},
-  "editor.fontWeight": "normal"
+  }
 }
