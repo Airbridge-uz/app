@@ -1,5 +1,5 @@
 import type { ChatSession, SearchInfo } from "@/entities/chat"
-import type { FlightOffer } from "@/features/flight-search"
+import type { FlightOffer } from "@/entities/flight-offer"
 import { typeSafeRequest } from "@/shared/lib/http"
 import type { ApiRequestPayload } from "@/shared/types/http"
 import type { ItineraryData } from "@/widgets/trip-planner/ui/trip-itinerary"
