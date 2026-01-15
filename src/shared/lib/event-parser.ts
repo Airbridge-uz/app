@@ -112,20 +112,11 @@ export class SuggestionsParser implements EventParser {
     return {
       id,
       timestamp,
-      type: "content",
+      type: "suggestions",
       role: "assistant",
       model: "gpt-5.1",
-      metadata: {
-        type: "suggestions",
-        value: data,
-      },
-      delta: "",
-      content: "",
-    } satisfies ContentStreamChunk & {
-      metadata: {
-        type: "suggestions"
-        value: SuggestionsEventChunk
-      }
+      delta: data,
+      content: data,
     }
   }
 }

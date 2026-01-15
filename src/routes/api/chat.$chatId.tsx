@@ -63,6 +63,7 @@ export async function* responseToStreamChunks(
               yield errorChunkParser.format(parseResult.error.message)
               continue
             }
+            // @ts-expect-error
             yield suggestionsParser.format(parseResult.value)
           } else if (currentEvent === "status") {
             const statusData = JSON.parse(data)

@@ -15,6 +15,7 @@ import {
   PromptInputTextarea,
 } from "@/shared/ui/prompt-input"
 import { ScrollButton } from "@/shared/ui/scroll-button"
+import { TextShimmer } from "@/shared/ui/text-shimmer"
 import type { MessagePart, UIMessage } from "@tanstack/ai-client"
 import {
   fetchServerSentEvents,
@@ -25,12 +26,17 @@ import { useQuery } from "@tanstack/react-query"
 import { getRouteApi, useParams } from "@tanstack/react-router"
 import { ArrowUp, Globe, Loader2, Mic, Square } from "lucide-react"
 import { useRef, useState } from "react"
+import { SuggestionList } from "./suggestion-list"
 import { ThinkingSteps } from "./thinking-steps"
 
 const routeApi = getRouteApi("/_app/chat/$chatId/")
 
 export function ChatInterface() {
   const [prompt, setPrompt] = useState("")
+  const [status, setStatus] = useState<string | null>(null)
+  const [suggestions, setSuggestions] = useState<
+    { label: string; value: string; type: string }[]
+  >([])
   const { execute, previewItinerary, previewOffers } = useTripPreview()
   const routeParams = useParams({
     from: "/_app/chat/$chatId/",
@@ -47,8 +53,20 @@ export function ChatInterface() {
         } else if (chunk.type === "flight_cards") {
           execute()
           previewOffers(chunk.payload, false)
+        } else if (chunk.type === "suggestions") {
+          setSuggestions(chunk.content)
+        } else if (chunk.type === "status") {
+          setStatus(chunk.content)
         }
       },
+      onFinish() {
+        setStatus(null)
+      },
+      onError() {
+        setStatus("Something went wrong")
+        setSuggestions([])
+      },
+      id: routeParams.chatId,
     })
 
   const handleSubmit = async () => {
@@ -57,8 +75,16 @@ export function ChatInterface() {
     const user = await getCurrentUser()
     if (user.isErr()) return
 
+    setStatus("Generating your plan 🪄")
     sendMessage(prompt)
     setPrompt("")
+    setSuggestions([])
+  }
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setPrompt(suggestion)
+    sendMessage(suggestion)
+    setSuggestions([])
   }
 
   return (
@@ -82,13 +108,20 @@ export function ChatInterface() {
       </div>
 
       <div className="bg-background z-10 shrink-0 px-3 pb-3 md:px-5 md:pb-5">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {status !== null && <TextShimmer duration={2}>{status}</TextShimmer>}
+          {suggestions.length > 0 && (
+            <SuggestionList
+              suggestions={suggestions}
+              onSelect={handleSuggestionClick}
+            />
+          )}
           <PromptInput
             isLoading={isLoading}
             value={prompt}
             onValueChange={setPrompt}
             onSubmit={handleSubmit}
-            className="border-input bg-popover relative z-10 w-full rounded-3xl border p-0 shadow-xs"
+            className="border-input bg-popover relative z-10 w-full rounded-3xl border p-0 shadow-xs mt-6"
           >
             <div className="flex justify-between items-center gap-6 px-3 py-2">
               <PromptInputTextarea
